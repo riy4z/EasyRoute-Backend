@@ -31,8 +31,9 @@ const addressSchema = new mongoose.Schema({
     "ZIP Code": String,
     "longitude": Number,
     "latitude": Number,
+    "isHidden": { type: Boolean, default: false },
   });
-  addressSchema.index({ "First Name": 1, "Last Name": 1, "Street Address":1, "City": 1,"State":1 }, { unique: true });
+  addressSchema.index({ "First Name": 1, "Last Name": 1, "Street Address":1, "City": 1,"State":1, "ZIP Code": 1 }, { unique: true });
   const AddressInfo = mongoose.model('AddressInfo', addressSchema);
 
   // Define a route to store addressData
@@ -50,6 +51,24 @@ app.post('/api/store-address-data', async (req, res) => {
         } else {
           res.status(500).json({ error: 'Error saving address data' });
         }
+  }
+});
+
+// Define a route to update addressData by ID
+app.patch('/api/update-address-data/:id', async (req, res) => {
+  const { id } = req.params;
+  const updatedData = req.body;
+
+  try {
+    const addressData = await AddressInfo.findByIdAndUpdate(id, updatedData, { new: true });
+
+    if (addressData) {
+      res.status(200).json(addressData);
+    } else {
+      res.status(404).json({ message: 'Address data not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: 'Error updating address data' });
   }
 });
   
