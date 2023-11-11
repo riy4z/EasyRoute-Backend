@@ -1,10 +1,12 @@
 // server.js
-const express = require('express');
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
-const cors = require('cors');
-const app = express();
+import express from 'express';
+import cors from 'cors';
+import morgan from 'morgan';
+import bodyParser from 'body-parser';
+import mongoose from 'mongoose';
+import router from './router/route.js';
 
+const app = express();
 // Connect to MongoDB Atlas
 mongoose.connect('mongodb+srv://easyroute:i9AoXfrN8tbdZmj0@cluster0.xdo4eov.mongodb.net/Accounts?retryWrites=true&w=majority', {
   useNewUrlParser: true,
@@ -20,6 +22,9 @@ db.once('open', () => {
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(morgan('tiny'));
+app.disable('x-powered-by');
+
 
 // Define a Mongoose model for the "addressData" collection
 const addressSchema = new mongoose.Schema({
@@ -31,37 +36,37 @@ const addressSchema = new mongoose.Schema({
     "ZIP Code": String,
     "longitude": Number,
     "latitude": Number,
-    "isHidden": { type: Boolean, default: false },
   });
-  addressSchema.index({ "First Name": 1, "Last Name": 1, "Street Address":1, "City": 1,"State":1, "ZIP Code": 1 }, { unique: true });
+  addressSchema.index({ "First Name": 1, "Last Name": 1 }, { unique: true });
   const AddressInfo = mongoose.model('AddressInfo', addressSchema);
+
 
   // Define a route to store addressData
 app.post('/api/store-address-data', async (req, res) => {
-  try {
-    const data = req.body; 
-    // This assumes that your addressData is sent in the request body
-    const savedData = new AddressInfo(data);
-    await savedData.save();
-    res.status(201).json({ message: 'Address data saved successfully' });
-  } catch (error) {
-      if (error.code === 11000) {
-          // MongoDB error code 11000 indicates a duplicate key error
-          res.status(400).json({ error: 'Duplicate value found in unique field' });
-        } else {
-          res.status(500).json({ error: 'Error saving address data' });
-        }
-  }
-});
+    try {
+      const data = req.body; 
+      // This assumes that your addressData is sent in the request body
+      const savedData = new AddressInfo(data);
+      await savedData.save();
+      res.status(201).json({ message: 'Address data saved successfully' });
+    } catch (error) {
+        if (error.code === 11000) {
+            // MongoDB error code 11000 indicates a duplicate key error
+            res.status(400).json({ error: 'Duplicate value found in unique field' });
+          } else {
+            res.status(500).json({ error: 'Error saving address data' });
+          }
+    }
+  });
 
-// Define a route to update addressData by ID
+  // Define a route to update addressData by ID
 app.patch('/api/update-address-data/:id', async (req, res) => {
   const { id } = req.params;
   const updatedData = req.body;
-
+  
   try {
     const addressData = await AddressInfo.findByIdAndUpdate(id, updatedData, { new: true });
-
+  
     if (addressData) {
       res.status(200).json(addressData);
     } else {
@@ -70,10 +75,10 @@ app.patch('/api/update-address-data/:id', async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: 'Error updating address data' });
   }
-});
+  });
   
-// Define a route to retrieve addressData
-app.get('/api/get-address-data', async (req, res) => {
+  // Define a route to retrieve addressData
+  app.get('/api/get-address-data', async (req, res) => {
   try {
     const addressData = await AddressInfo.find({}); // Fetches all data from the AddressInfo collection
     if (addressData && addressData.length > 0) {
@@ -85,9 +90,16 @@ app.get('/api/get-address-data', async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: 'Error retrieving address data' });
   }
-});
+  });
+  
+  app.get('/',(req,res) => {
+    res.status(201).json("Home GET Request")
+  });
 
-const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+  app.use('/api', router);
+ 
+  const PORT = process.env.PORT || 4000;
+
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  })
