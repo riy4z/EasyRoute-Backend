@@ -16,6 +16,7 @@ export const UserSchema = new mongoose.Schema({
         required : [true, "Please provide a unique email"],
         unique: true,
     },
+    
     firstName: { type: String},
     lastName: { type: String},
     mobile : { type : Number},
@@ -24,3 +25,4 @@ export const UserSchema = new mongoose.Schema({
 });
 
 export default mongoose.model.Users || mongoose.model('User', UserSchema);
+// HI THERE

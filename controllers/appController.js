@@ -4,6 +4,23 @@ import jwt from "jsonwebtoken";
 import otpGenerator from 'otp-generator';
 import ENV from '../config.js';
 
+
+// export async function verifyEmail(req, res,next) {
+//     try {
+        
+//         const { email } = req.method == "GET" ? req.query : req.body;
+
+//         // check the user existance
+//         let exist = await UserModel.findOne({ email });
+//         if(exist) return res.status(404).send({msg : 'User Exists'})
+//         if(!exist) return res.status(201).send({ error : "Can't find User!"});
+//         next();
+
+//     } catch (error) {
+//         return res.status(404).send({ error: "Authentication Error"});
+//     }
+// }
+
 /** middleware for verify user */
 export async function verifyUser(req, res, next){
     try {
@@ -69,6 +86,7 @@ export async function register(req, res) {
         return res.status(500).json({ error: 'Internal server error' });
     }
 }
+
 
 /** POST: localhost:4000/api/login 
  * @param: {
@@ -173,9 +191,23 @@ export async function generateOTP(req,res){
     req.app.locals.OTP = await otpGenerator.generate(6, { lowerCaseAlphabets: false, upperCaseAlphabets: false, specialChars: false})
     res.status(201).send({code: req.app.locals.OTP})
 }
+export async function generateOTPbyEmail(req,res){
+req.app.locals.OTP = await otpGenerator.generate(6, { lowerCaseAlphabets: false, upperCaseAlphabets: false, specialChars: false})
+    res.status(201).send({code: req.app.locals.OTP})
+}
 
 /** GET: localhost:4000/api/verifyOTP */
 export async function verifyOTP(req,res){
+    const {code} = req.query;
+    if(parseInt(req.app.locals.OTP) === parseInt(code)){
+      req.app.locals.OTP = null;
+      req.app.locals.resetSession = true;
+      return res.status(201).send({msg : "Verified Successfully!"})
+
+    }
+    return res.status(400).send({error : "Invalid OTP"});
+}
+export async function verifyOTPbyEmail(req,res){
     const {code} = req.query;
     if(parseInt(req.app.locals.OTP) === parseInt(code)){
       req.app.locals.OTP = null;
