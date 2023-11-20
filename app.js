@@ -72,8 +72,8 @@ app.post('/api/process-csv', async (req, res) => {
     // Process the CSV data and store the details in the CsvDetails collection
     try {
       const newCsvDetails = new CsvDetails({
-        UserName: csvData[0]['UserName'], // Assuming 'UserName' is a field in your CSV
-        FileName: 'example.csv', // Replace with the actual file name or extract from the CSV data
+        UserName: csvData[0]['UserName'], 
+        FileName: 'example.csv', 
         TotalCount: csvData.length,
         IsComplete: true,
         CreatedDateTime: new Date(),
