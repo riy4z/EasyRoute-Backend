@@ -68,12 +68,13 @@ app.post('/api/store-address-data', async (req, res) => {
   });
 app.post('/api/process-csv', async (req, res) => {
     const csvData = req.body.csvData;
+    const fileName = req.body.fileName; 
   
-    // Process the CSV data and store the details in the CsvDetails collection
+    
     try {
       const newCsvDetails = new CsvDetails({
         UserName: csvData[0]['UserName'], 
-        FileName: 'example.csv', 
+        FileName: fileName, 
         TotalCount: csvData.length,
         IsComplete: true,
         CreatedDateTime: new Date(),
