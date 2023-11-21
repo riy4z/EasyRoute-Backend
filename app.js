@@ -39,6 +39,14 @@ const addressSchema = new mongoose.Schema({
   });
   addressSchema.index({ "First Name": 1, "Last Name": 1 }, { unique: true });
   const AddressInfo = mongoose.model('AddressInfo', addressSchema);
+const CsvDetails = mongoose.model('CsvDetails', {
+    UserName: String,
+    FileName: String,
+    TotalCount: Number,
+    IsComplete: Boolean,
+    CreatedDateTime: Date,
+    LastModifiedDateTime: Date,
+  });
 
 
   // Define a route to store addressData
@@ -58,7 +66,30 @@ app.post('/api/store-address-data', async (req, res) => {
           }
     }
   });
-
+app.post('/api/process-csv', async (req, res) => {
+    const csvData = req.body.csvData;
+    const fileName = req.body.fileName; 
+  
+    
+    try {
+      const newCsvDetails = new CsvDetails({
+        UserName: csvData[0]['UserName'], 
+        FileName: fileName, 
+        TotalCount: csvData.length,
+        IsComplete: true,
+        CreatedDateTime: new Date(),
+        LastModifiedDateTime: new Date(),
+      });
+  
+      await newCsvDetails.save();
+  
+      res.json({ success: true, details: newCsvDetails });
+    } catch (error) {
+      console.error('Error processing CSV data:', error);
+      res.status(500).json({ success: false, error: 'Internal server error' });
+    }
+  });
+  
   // Define a route to update addressData by ID
 app.patch('/api/update-address-data/:id', async (req, res) => {
   const { id } = req.params;
