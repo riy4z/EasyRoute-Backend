@@ -12,7 +12,6 @@ router.route('/login').post(controller.verifyUser,controller.login);
 
 /** GET Methods */
 router.route('/user/:username').get(controller.getUser)
-// router.route('/verifyEmail').get(controller.verifyEmail);
 router.route('/generateOTP').get(controller.verifyUser,localVariables,controller.generateOTP)
 router.route('/generateOTPbyEmail').get(localVariables,controller.generateOTPbyEmail)
 router.route('/verifyOTP').get(controller.verifyUser,controller.verifyOTP)
