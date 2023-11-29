@@ -44,6 +44,7 @@ const addressSchema = new mongoose.Schema({
   "longitude": Number,
   "latitude": Number,
 });
+
 addressSchema.index({ "First Name": 1, "Last Name": 1 }, { unique: true });
   const AddressInfo = mongoose.model('AddressInfo', addressSchema);
 const CsvDetails = mongoose.model('CsvDetails', {
@@ -74,11 +75,12 @@ app.post('/api/store-address-data', async (req, res) => {
 app.post('/api/process-csv', async (req, res) => {
   const csvData = req.body.csvData;
   const fileName = req.body.fileName;
+  const username = req.body.username; // Get the username from the request body
 
   try {
     const newCsvDetails = new CsvDetails({
-      UserName: csvData[0]['UserName'], 
-      FileName: fileName, 
+      UserName: username,
+      FileName: fileName,
       TotalCount: csvData.length,
       IsComplete: true,
       CreatedDateTime: new Date(),
@@ -90,9 +92,9 @@ app.post('/api/process-csv', async (req, res) => {
     res.json({ success: true, details: newCsvDetails });
   } catch (error) {
     console.error('Error processing CSV data:', error);
-    res.status(500).json({ success: false, error: 'Internal server error' });
-    }
-  });
+    res.status(500).json({ success: false, error: 'Internal server error' });
+  }
+});
 
 // Define a route to update addressData by ID
 app.patch('/api/update-address-data/:id', async (req, res) => {
