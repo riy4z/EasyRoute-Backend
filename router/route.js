@@ -2,8 +2,9 @@ import { Router } from "express";
 const router = Router(); 
 import * as controller from '../controllers/appController.js';
 import * as roles from "../roles.js";
-import * as csvdetails from "../csvdetails.js"
-import * as companys from "../companys.js"
+import * as csvdetails from "../csvdetails.js";
+import * as companys from "../companys.js";
+import * as locations from "../locations.js";
 import Auth, {localVariables} from '../middleware/auth.js';
 import {registerMail} from '../controllers/mailer.js';
 
@@ -12,8 +13,9 @@ router.route('/register').post(controller.register);;
 router.route('/registerMail').post(registerMail);
 router.route('/authenticate').post(controller.verifyUser,(req,res)=>res.end());
 router.route('/login').post(controller.verifyUser,controller.login);
-router.route('/addRoles').post(roles.AddRoles)
-router.route('/processCSV').post(csvdetails.ProcessCSV)
+router.route('/addRoles').post(roles.AddRoles);
+router.route('/processCSV').post(csvdetails.ProcessCSV);
+router.route('/addLocations').post(locations.AddLocations);
 
 /** GET Methods */
 router.route('/user/:username').get(controller.getUser)
@@ -24,6 +26,7 @@ router.route('/verifyOTPbyEmail').get(controller.verifyOTPbyEmail)
 router.route('/createResetSession').get(controller.createResetSession)
 router.route('/getRoles').get(roles.getRoles)
 router.route('/getCompanys').get(companys.getCompanys)
+router.route('/getLocations').get(locations.getLocations)
 
 /** PUT Methods */
 router.route('/updateuser').put(Auth,controller.updateUser);
