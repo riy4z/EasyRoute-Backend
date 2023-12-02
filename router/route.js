@@ -4,6 +4,7 @@ import * as controller from '../controllers/appController.js';
 import * as roles from "../roles.js";
 import * as csvdetails from "../csvdetails.js"
 import * as addressinfo from "../addressinfo.js"
+import * as locations from "../locations.js"
 import * as companys from "../companys.js"
 import Auth, {localVariables} from '../middleware/auth.js';
 import {registerMail} from '../controllers/mailer.js';
