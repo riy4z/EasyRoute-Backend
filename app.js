@@ -6,6 +6,7 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import router from './router/route.js';
 
+
 const app = express();
 
 // Connect to MongoDB Atlas
@@ -43,8 +44,9 @@ const addressSchema = new mongoose.Schema({
   "ZIP Code": String,
   "longitude": Number,
   "latitude": Number,
+  "isHidden": { type: Boolean, default: false },
 });
-addressSchema.index({ "First Name": 1, "Last Name": 1 }, { unique: true });
+addressSchema.index({ "First Name": 1, "Last Name": 1, "Street Address":1, "City": 1,"State":1, "ZIP Code": 1 }, { unique: true });
   const AddressInfo = mongoose.model('AddressInfo', addressSchema);
 const CsvDetails = mongoose.model('CsvDetails', {
     UserName: String,
@@ -137,18 +139,7 @@ const FormDataModel = mongoose.model('FormData', {
   company: String,
 });
 
-// Endpoint to handle form submissions
-app.post('/api/submitForm', async (req, res) => {
-  const formData = req.body;
-  console.log(formData);
-  const newFormData = new FormDataModel(formData);
 
-  // Save the document to the MongoDB database
-  await newFormData.save();
-
-  console.log('Form data saved successfully');
-  res.status(200).send('Form data saved successfully');
-});
 
 app.get('/', (req, res) => {
   res.status(201).json("Home GET Request");

@@ -21,22 +21,11 @@ export async function verifyUser(req, res, next){
     }
 }
 
-/** POST: localhost:4000/api/register 
- * @param : {
-  "username" : "example123",
-  "password" : "admin123",
-  "email": "example@gmail.com",
-  "firstName" : "bill",
-  "lastName": "william",
-  "mobile": 8009860560,
-  "address" : "Apt. 556, Kulas Light, Gwenborough",
-  "profile": ""
-}
-*/
+
 
 export async function register(req, res) {
     try {
-        const { username, password, profile, email } = req.body;
+        const { username, password, profile, email, companyId, role } = req.body;
 
         // Check for existing username
         const existingUsername = await UserModel.findOne({ username });
@@ -57,11 +46,13 @@ export async function register(req, res) {
                 password: hashedPassword,
                 profile: profile || '',
                 email,
+                CompanyID: companyId || null, // Set to null if not provided
+                RoleID: role || null, // Set to default if not provided
             });
 
             // Save the user to the database
             const result = await user.save();
-            return res.status(201).json({ msg: 'User registered successfully', result});
+            return res.status(201).json({ msg: 'User registered successfully', result });
         } else {
             return res.status(400).json({ error: 'Password is required' });
         }
