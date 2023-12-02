@@ -6,6 +6,7 @@ import * as csvdetails from "../csvdetails.js"
 import * as addressinfo from "../addressinfo.js"
 import * as locations from "../locations.js"
 import * as companys from "../companys.js"
+import * as userlocations from "../userlocations.js"
 import Auth, {localVariables} from '../middleware/auth.js';
 import {registerMail} from '../controllers/mailer.js';
 
@@ -18,6 +19,7 @@ router.route('/store-address-data').post(addressinfo.StoreAddressData)
 router.route('/addRoles').post(roles.AddRoles)
 router.route('/processCSV').post(csvdetails.ProcessCSV)
 router.route('/addLocations').post(locations.AddLocations);
+router.route('/addUserLocation').post(userlocations.AddUserLocation)
 
 /** GET Methods */
 router.route('/user/:username').get(controller.getUser)
