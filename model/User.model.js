@@ -1,3 +1,4 @@
+import { ObjectId } from "mongodb";
 import mongoose from "mongoose";
 
 export const UserSchema = new mongoose.Schema({
@@ -22,6 +23,8 @@ export const UserSchema = new mongoose.Schema({
     mobile : { type : Number},
     address: { type: String},
     profile: { type: String},
+    CompanyID: {type:ObjectId},
+    RoleID: {type:ObjectId},
     isAdmin : {type: Boolean, default : false}
 });
 

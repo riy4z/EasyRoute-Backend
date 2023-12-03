@@ -20,11 +20,11 @@ export async function AddLocations(req, res) {
         const { Location, CompanyID } = req.body;
         console.log(Location)
         // Check if the location already exists
-        const existingLocation = await LocationModel.findOne({ Location });
+        // const existingLocation = await LocationModel.findOne({ Location });
     
-        if (existingLocation) {
-          return res.status(400).json({ error: 'Location already exists' });
-        }
+        // if (existingLocation) {
+        //   return res.status(400).json({ error: 'Location already exists' });
+        // }
     
         // Create a new location
         const newLocation = new LocationModel({Location: Location, CompanyID: CompanyID });
