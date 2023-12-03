@@ -29,3 +29,22 @@ export async function AddUserLocation(req, res) {
     res.status(500).json({ error: "Internal Server Error" });
   }
 }
+
+export async function GetUserLocations(req, res) {
+  try {
+    const userId = req.query.userId; // Use req.query instead of req.params
+    console.log(userId);
+    if (!userId) {
+      return res.status(400).json({ error: "UserId is required" });
+    }
+
+    // Fetch user locations based on userId
+    const userLocations = await UserLocationModel.find({ UserID: userId });
+
+    // Send the user locations in the response
+    res.status(200).json({ userLocations });
+  } catch (error) {
+    console.error("Error fetching user locations:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+}
