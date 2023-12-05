@@ -1,21 +1,22 @@
 import AddressInfo from "./model/AddressInfo.model.js";
 
 //To store data in AddressInfo
-  export async function StoreAddressData(req,res){
-    try {
-        const data = req.body;
-        const savedData = new AddressInfo(data);
-        await savedData.save();
-        res.status(201).json({ message: 'Address data saved successfully' });
-      } catch (error) {
-        if (error.code === 11000) {
-          res.status(400).json({ error: 'Duplicate value found in unique field' });
-        } else {
-          res.status(500).json({ error: 'Error saving address data' });
-        }
-      }
-  }
 
+export async function StoreAddressData(req, res) {
+  try {
+    const data = req.body;
+    // Use insertMany to bulk insert the entire array
+    await AddressInfo.insertMany(data);
+
+    res.status(201).json({ message: 'Address data saved successfully' });
+  } catch (error) {
+    if (error.code === 11000) {
+      res.status(400).json({ error: 'Duplicate value found in unique field' });
+    } else {
+      res.status(500).json({ error: 'Error saving address data' });
+    }
+  }
+}
   // Define a route to update addressData by ID
   export async function UpdateAddressData(req,res){
     const { id } = req.params;

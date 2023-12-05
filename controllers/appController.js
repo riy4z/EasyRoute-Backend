@@ -47,7 +47,7 @@ export async function register(req, res) {
                 profile: profile || '',
                 email,
                 CompanyID: companyId || null, // Set to null if not provided
-                RoleID: role || null, // Set to default if not provided
+                RoleHierarchy: role || null, // Set to default if not provided
             });
 
             // Save the user to the database

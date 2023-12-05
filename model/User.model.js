@@ -24,8 +24,7 @@ export const UserSchema = new mongoose.Schema({
     address: { type: String},
     profile: { type: String},
     CompanyID: {type:ObjectId},
-    RoleID: {type:ObjectId},
-    isAdmin : {type: Boolean, default : false}
+    RoleHierarchy: {type:Number},
 });
 
 export default mongoose.model.Users || mongoose.model('User', UserSchema);

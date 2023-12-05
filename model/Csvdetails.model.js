@@ -1,7 +1,8 @@
+import { ObjectId } from "mongodb";
 import mongoose from "mongoose";
 
 export const CsvDetailsSchema = new mongoose.Schema({
-    UserName: {type: String},
+    UserID: {type: ObjectId},
     FileName: {type: String},
     TotalCount: {type: Number},
     IsComplete: {type:Boolean},

@@ -3,11 +3,11 @@ import CsvdetailsModel from "./model/Csvdetails.model.js";
 export async function ProcessCSV(req, res) {
     const csvData = req.body.csvData;
     const fileName = req.body.fileName;
-    const username = req.body.username; // Get the username from the request body
+    const userId = req.body.userId; // Get the username from the request body
   
     try {
       const newCsvDetails = new CsvdetailsModel({
-        UserName: username,
+        UserID: userId,
         FileName: fileName,
         TotalCount: csvData.length,
         IsComplete: true,

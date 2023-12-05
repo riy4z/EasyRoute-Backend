@@ -15,6 +15,6 @@ export const addressSchema = new mongoose.Schema({
     "LocationID": {type: ObjectId}
 });
 
-addressSchema.index({ "First Name": 1, "Last Name": 1, "Street Address":1, "City": 1,"State":1, "ZIP Code": 1 }, { unique: true });
+addressSchema.index({ "First Name": 1, "Last Name": 1, "Street Address":1, "City": 1,"State":1, "ZIP Code": 1, "LocationID": 1}, { unique: true });
 
 export default mongoose.model.AddressInfo || mongoose.model('AddressInfo', addressSchema)
