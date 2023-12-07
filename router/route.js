@@ -40,7 +40,7 @@ router.route('/resetPassword').put(controller.verifyUser,controller.resetPasswor
 
 
 /*PATCH Methods */
-router.route('update-address-data/:id').patch(addressinfo.UpdateAddressData)
+router.route('/update-address-data/:id').patch(addressinfo.UpdateAddressData)
 export default router;
 //
 

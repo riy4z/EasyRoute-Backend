@@ -17,17 +17,17 @@ export async function getLocations(req, res) {
 
 export async function AddLocations(req, res) {
     try {
-        const { Location, CompanyID } = req.body;
+        const { Location, CompanyID, StreetAddress, City, State, ZipCode } = req.body;
         console.log(Location)
         // Check if the location already exists
-        // const existingLocation = await LocationModel.findOne({ Location });
+        const existingLocation = await LocationModel.findOne({ Location, CompanyID });
     
-        // if (existingLocation) {
-        //   return res.status(400).json({ error: 'Location already exists' });
-        // }
+        if (existingLocation) {
+          return res.status(400).json({ error: 'Location already exists' });
+        }
     
         // Create a new location
-        const newLocation = new LocationModel({Location: Location, CompanyID: CompanyID });
+        const newLocation = new LocationModel({Location: Location, CompanyID: CompanyID, StreetAddress: StreetAddress, City: City, State: State, ZipCode: ZipCode });
         await newLocation.save();
     
         res.status(201).json({ message: 'Location added successfully', location: newLocation });
