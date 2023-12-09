@@ -31,6 +31,7 @@ router.route('/createResetSession').get(controller.createResetSession)
 router.route('/get-address-data').get(addressinfo.GetAddressData)
 router.route('/getRoles').get(roles.getRoles)
 router.route('/getCompanys').get(companys.getCompanys)
+router.route('/getCompanyById').get(companys.getCompanyById)
 router.route('/getLocations').get(locations.getLocations)
 router.route('/getUserLocations').get(userlocations.GetUserLocations)
 
