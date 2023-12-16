@@ -49,3 +49,23 @@ export async function StoreAddressData(req, res) {
         res.status(500).json({ error: 'Error retrieving address data' });
       }
   }
+
+  export async function GetAddressDataByMarkerId(req, res) {
+    try {
+      // Extract markerId from request parameters
+      const markerId = req.query.markerId;
+      const markkerId = `"${markerId}"`
+      console.log(markkerId)
+      // Use markerId in the query to find addressData
+      const addressData = await AddressInfo.find({ markerId: markerId });
+  
+      if (addressData && addressData.length > 0) {
+        res.setHeader('Content-Type', 'application/json');
+        res.status(200).json(addressData);
+      } else {
+        res.status(404).json({ message: 'No address data found for the specified markerId' });
+      }
+    } catch (error) {
+      res.status(500).json({ error: 'Error retrieving address data' });
+    }
+  }
