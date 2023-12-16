@@ -19,17 +19,18 @@ export async function getRoles(req, res) {
 
 export async function AddRoles(req, res) {
     try {
-        const { Role, CompanyID } = req.body;
-        console.log(Role)
+        const { Role, CompanyID, RoleHierarchy } = req.body;
+        console.log(Role, CompanyID, RoleHierarchy);
+
         // Check if the role already exists
-        // const existingRole = await RoleModel.findOne({ Role });
+        const existingRole = await RoleModel.findOne({ Role, CompanyID });
     
-        // if (existingRole) {
-        //   return res.status(400).json({ error: 'Role already exists' });
-        // }
+        if (existingRole) {
+          return res.status(400).json({ error: 'Role already exists' });
+        }
     
         // Create a new role
-        const newRole = new RoleModel({Role: Role, CompanyID: CompanyID });
+        const newRole = new RoleModel({Role: Role, CompanyID: CompanyID, RoleHierarchy: RoleHierarchy });
         await newRole.save();
     
         res.status(201).json({ message: 'Role added successfully', role: newRole });
