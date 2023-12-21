@@ -35,6 +35,7 @@ router.route('/getRoles').get(roles.getRoles)
 router.route('/getRolesByHierarchy').get(roles.getRolesByHierarchy)
 router.route('/getCompanys').get(companys.getCompanys)
 router.route('/getCompanyById').get(companys.getCompanyById)
+router.route('/getUsersByCompany').get(users.getUsersByCompany)
 router.route('/getLocations').get(locations.getLocations)
 router.route('/getUserLocations').get(userlocations.GetUserLocations)
 /** PUT Methods */
