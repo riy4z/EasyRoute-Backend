@@ -9,6 +9,7 @@ import * as companys from "../companys.js"
 import * as userlocations from "../userlocations.js"
 import Auth, {localVariables} from '../middleware/auth.js';
 import {registerMail} from '../controllers/mailer.js';
+import * as users from '../users.js'
 
 /**POST Methods */
 router.route('/register').post(controller.register);;
@@ -31,6 +32,7 @@ router.route('/createResetSession').get(controller.createResetSession)
 router.route('/get-address-data').get(addressinfo.GetAddressData)
 router.route('/get-address-data-marker').get(addressinfo.GetAddressDataByMarkerId)
 router.route('/getRoles').get(roles.getRoles)
+router.route('/getRolesByHierarchy').get(roles.getRolesByHierarchy)
 router.route('/getCompanys').get(companys.getCompanys)
 router.route('/getCompanyById').get(companys.getCompanyById)
 router.route('/getLocations').get(locations.getLocations)
