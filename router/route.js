@@ -10,6 +10,8 @@ import * as userlocations from "../userlocations.js"
 import Auth, {localVariables} from '../middleware/auth.js';
 import {registerMail} from '../controllers/mailer.js';
 import * as users from '../users.js'
+import * as routes from "../routes.js";
+import * as userroutes from "../userroute.js";
 
 /**POST Methods */
 router.route('/register').post(controller.register);;
@@ -21,6 +23,8 @@ router.route('/addRoles').post(roles.AddRoles)
 router.route('/processCSV').post(csvdetails.ProcessCSV)
 router.route('/addLocations').post(locations.AddLocations);
 router.route('/addUserLocation').post(userlocations.AddUserLocation)
+router.route('/saveRoute').post(routes.saveRoute)
+router.route('/addUserRoute').post(userroutes.AddUserRoute)
 
 /** GET Methods */
 router.route('/user/:username').get(controller.getUser)
@@ -38,6 +42,8 @@ router.route('/getCompanyById').get(companys.getCompanyById)
 router.route('/getUsersByCompany').get(users.getUsersByCompany)
 router.route('/getLocations').get(locations.getLocations)
 router.route('/getUserLocations').get(userlocations.GetUserLocations)
+router.route('/getUserRoutes').get(userroutes.GetUserRoutes)
+
 /** PUT Methods */
 router.route('/updateuser').put(Auth,controller.updateUser);
 router.route('/resetPassword').put(controller.verifyUser,controller.resetPassword);
