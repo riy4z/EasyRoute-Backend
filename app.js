@@ -23,13 +23,13 @@ db.once('open', () => {
 
 // Updated CORS configuration
 const corsOptions = {
-  origin: 'http://localhost:3000', // Update this to match your front-end URL
+  origin: ['http://localhost:3000', 'http://localhost:8081'],
   optionsSuccessStatus: 200,
 };
 
 app.use(cors(corsOptions));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(morgan('tiny'));
 app.disable('x-powered-by');
 

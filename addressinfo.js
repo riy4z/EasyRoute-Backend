@@ -6,7 +6,7 @@ export async function StoreAddressData(req, res) {
   try {
     const data = req.body;
     // Use insertMany to bulk insert the entire array
-    await AddressInfo.insertMany(data);
+    await AddressInfo.insertMany(data,  { ordered: false });
 
     res.status(201).json({ message: 'Address data saved successfully' });
   } catch (error) {
@@ -64,6 +64,25 @@ export async function StoreAddressData(req, res) {
         res.status(200).json(addressData);
       } else {
         res.status(404).json({ message: 'No address data found for the specified markerId' });
+      }
+    } catch (error) {
+      res.status(500).json({ error: 'Error retrieving address data' });
+    }
+  }
+
+  export async function GetAddressDataByLocationID(req, res) {
+    try {
+      // Extract LocationID from request parameters
+      const LocationID = req.params.LocationID;
+  
+      // Use LocationID in the query to find addressData
+      const addressData = await AddressInfo.find({ LocationID: LocationID });
+  
+      if (addressData && addressData.length > 0) {
+        res.setHeader('Content-Type', 'application/json');
+        res.status(200).json(addressData);
+      } else {
+        res.status(404).json({ message: 'No address data found for the specified LocationID' });
       }
     } catch (error) {
       res.status(500).json({ error: 'Error retrieving address data' });
