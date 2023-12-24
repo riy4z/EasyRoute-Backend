@@ -22,14 +22,18 @@ export async function saveRoute(req, res) {
         }
     }
 }
-// Update 
+// Update
 export async function updateRoute(req, res) {
     try {
-        const routeId = req.query.routeId;
-        const { Route, CompanyID, LocationID, RouteNumber } = req.body;
-        console.log(routeId, Route, CompanyID, LocationID, RouteNumber);
-       
-        const updatedRoute = await RoutesModel.find(routeId, { Route, CompanyID, LocationID, RouteNumber }, { new: true });
+        const routeId = req.params.id;
+        const { RouteName } = req.body;
+
+        // Use findOneAndUpdate to update the route
+        const updatedRoute = await RoutesModel.findOneAndUpdate(
+            { _id: routeId },
+            { $set: { RouteName } },
+            { new: true }
+        );
 
         if (!updatedRoute) {
             return res.status(404).json({ error: 'Route not found' });

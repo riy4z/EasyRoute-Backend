@@ -55,12 +55,13 @@ router.route('/resetPassword').put(controller.verifyUser,controller.resetPasswor
 
 /*PATCH Methods */
 router.route('/update-address-data/:id').patch(addressinfo.UpdateAddressData)
-export default router;
+router.route('/updateRoute/:id').patch(routes.updateRoute)
+
 
 /*DELETE Methods*/
 router.route('/deleteRoute/:id').delete(routes.deleteRoute)
 
 //
-
+export default router;
 
 
