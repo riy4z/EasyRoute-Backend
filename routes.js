@@ -1,4 +1,5 @@
 import RoutesModel from "./model/Route.model.js";
+import UserRouteModel from "./model/UserRoute.model.js";
 
 // Save 
 export async function saveRoute(req, res) {
@@ -44,18 +45,39 @@ export async function updateRoute(req, res) {
 // Delete 
 export async function deleteRoute(req, res) {
     try {
-        const routeId = req.query.routeId;
+        const routeId = req.params.id;
         console.log(routeId);
        
-        const deletedRoute = await RoutesModel.find(routeId);
+        const deletedRoute = await RoutesModel.deleteOne({_id:routeId});
+        const deletedUserRoute = await UserRouteModel.deleteOne({RouteID:routeId});
 
-        if (!deletedRoute) {
+        if (!deletedRoute||!deletedUserRoute) {
             return res.status(404).json({ error: 'Route not found' });
         }
 
         res.status(200).json({ message: 'Route deleted successfully', route: deletedRoute });
     } catch (error) {
         console.error('Error deleting route:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+}
+
+
+// Fetch by ID
+export async function getRouteById(req, res) {
+    try {
+        const routeId = req.params.routeId;
+        console.log(routeId);
+
+        const foundRoute = await RoutesModel.findById(routeId);
+
+        if (!foundRoute) {
+            return res.status(404).json({ error: 'Route not found' });
+        }
+
+        res.status(200).json({ message: 'Route fetched successfully', route: foundRoute });
+    } catch (error) {
+        console.error('Error fetching route:', error);
         res.status(500).json({ error: 'Internal server error' });
     }
 }

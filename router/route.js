@@ -45,6 +45,8 @@ router.route('/getLocations').get(locations.getLocations)
 router.route('/getLocationsById/:locationId').get(locations.getLocationById)
 router.route('/getUserLocations').get(userlocations.GetUserLocations)
 router.route('/getUserRoutes').get(userroutes.GetUserRoutes)
+router.route('/getRoutes/:routeId').get(routes.getRouteById)
+
 
 /** PUT Methods */
 router.route('/updateuser').put(Auth,controller.updateUser);
@@ -54,6 +56,10 @@ router.route('/resetPassword').put(controller.verifyUser,controller.resetPasswor
 /*PATCH Methods */
 router.route('/update-address-data/:id').patch(addressinfo.UpdateAddressData)
 export default router;
+
+/*DELETE Methods*/
+router.route('/deleteRoute/:id').delete(routes.deleteRoute)
+
 //
 
 
