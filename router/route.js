@@ -12,6 +12,7 @@ import {registerMail} from '../controllers/mailer.js';
 import * as users from '../users.js'
 import * as routes from "../routes.js";
 import * as userroutes from "../userroute.js";
+import * as superuser from "../superuser.js"
 
 /**POST Methods */
 router.route('/register').post(controller.register);;
@@ -61,7 +62,13 @@ router.route('/updateRoute/:id').patch(routes.updateRoute)
 /*DELETE Methods*/
 router.route('/deleteRoute/:id').delete(routes.deleteRoute)
 
-//
+/*Super User*/
+router.route('/request-access').post(superuser.SaveRequest)
+router.route('/fetch-requests').get(superuser.FetchRequests)
+router.route('/update-requests').post(superuser.updateAccessRequest)
+router.route('/create-company').post(superuser.createCompany)
+router.route('/register-corporate-user').post(superuser.registerCorporateUser)
+
 export default router;
 
 
