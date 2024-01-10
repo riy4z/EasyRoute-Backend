@@ -1,7 +1,7 @@
 // Import the UserLocation model
 import UserLocationModel from "./model/UserLocation.model.js";
 
-// AddUserLocation function to store userId and locationId
+// AddUserLocation 
 export async function AddUserLocation(req, res) {
   try {
     // Extract userId and locationId from the request body or params
@@ -30,6 +30,7 @@ export async function AddUserLocation(req, res) {
   }
 }
 
+// Fetch
 export async function GetUserLocations(req, res) {
   try {
     const userId = req.query.userId; // Use req.query instead of req.params
@@ -48,3 +49,38 @@ export async function GetUserLocations(req, res) {
     res.status(500).json({ error: "Internal Server Error" });
   }
 }
+
+// DeleteUserLocation
+export async function DeleteUserLocation(req, res) {
+  try {
+    // Extract userId and locationId from the request body or params
+    const { userId, locationId } = req.body; // Assuming you are sending userId and locationId in the request body
+console.log(req.body)
+    // Validate if userId and locationId are provided
+    if (!userId || !locationId) {
+      return res.status(400).json({ error: "UserId and LocationId are required" });
+    }
+
+    // Find and delete the UserLocation document based on userId and locationId
+    const deletedUserLocation = await UserLocationModel.findOneAndDelete({
+      UserID: userId,
+      LocationID: locationId,
+    });
+
+    // Check if the user location was found and deleted
+    if (!deletedUserLocation) {
+      return res.status(404).json({ error: "User location not found" });
+    }
+
+    // Send a success response
+    res.status(200).json({ message: "User location deleted successfully" });
+  } catch (error) {
+    // Handle errors
+    console.error("Error deleting user location:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+}
+
+
+
+

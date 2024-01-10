@@ -12,7 +12,7 @@ import {registerMail} from '../controllers/mailer.js';
 import * as users from '../users.js'
 import * as routes from "../routes.js";
 import * as userroutes from "../userroute.js";
-import * as superuser from "../superuser.js"
+
 
 /**POST Methods */
 router.route('/register').post(controller.register);;
@@ -57,10 +57,13 @@ router.route('/resetPassword').put(controller.verifyUser,controller.resetPasswor
 /*PATCH Methods */
 router.route('/update-address-data/:id').patch(addressinfo.UpdateAddressData)
 router.route('/updateRoute/:id').patch(routes.updateRoute)
-
+// router.route('/updateUserLocation/:id').patch(userlocations.UpdateUserLocation)
+router.route('/updateUserRoleHierarchy/:id').patch(users.UpdateUserRoleHierarchy)
 
 /*DELETE Methods*/
 router.route('/deleteRoute/:id').delete(routes.deleteRoute)
+router.route('/deleteUserLocation').delete(userlocations.DeleteUserLocation)
+//
 
 /*Super User*/
 router.route('/request-access').post(superuser.SaveRequest)
