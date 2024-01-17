@@ -5,8 +5,6 @@ import RoleModel from "./model/Role.model.js";
 export async function getRoles(req, res) {
     try {
         const companyid = req.query.companyid;  // Change this line
-        console.log(companyid);
-
         // Modify the query based on your database schema and logic
         const roles = await RoleModel.find({ CompanyID: companyid });
         
@@ -21,7 +19,6 @@ export async function getRoles(req, res) {
 export async function getRolesByHierarchy(req, res) {
   try {
       const roleHierarchy = req.query.rolehierarchy;
-      console.log(roleHierarchy);
 
       // Modify the query based on your database schema and logic
       const roles = await RoleModel.find({ RoleHierarchy: roleHierarchy });
@@ -36,7 +33,6 @@ export async function getRolesByHierarchy(req, res) {
 export async function AddRoles(req, res) {
     try {
         const { Role, CompanyID, RoleHierarchy } = req.body;
-        console.log(Role, CompanyID, RoleHierarchy);
 
         // Check if the role already exists
         const existingRole = await RoleModel.findOne({ Role, CompanyID });

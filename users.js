@@ -1,5 +1,5 @@
 import UserModel from "./model/User.model.js";
-
+import { ObjectId } from "mongodb";
 
 export async function getUsersByCompany(req, res) {
     try {
@@ -49,3 +49,20 @@ export async function UpdateUserRoleHierarchy(req, res) {
   }
 }
 
+export async function getUserById(req, res) {
+  try {
+      const userId = req.params.userId;
+      console.log('userId:', userId);
+
+      const user = await UserModel.findOne({ _id: userId });
+
+      if (!user) {
+          return res.status(404).send("User not found");
+      }
+
+      res.send(user);
+  } catch (error) {
+      console.error("Error fetching user by ID:", error);
+      res.status(500).send("Internal Server Error");
+  }
+}

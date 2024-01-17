@@ -4,7 +4,6 @@ import LocationModel from "./model/Location.model.js";
 export async function getLocations(req, res) {
     try {
         const companyid = req.query.companyid;
-        console.log(companyid);
 
         const locations = await LocationModel.find({ CompanyID: companyid });
         
@@ -18,7 +17,6 @@ export async function getLocations(req, res) {
 export async function AddLocations(req, res) {
     try {
         const { Location, CompanyID, StreetAddress, City, State, ZipCode } = req.body;
-        console.log(Location);
 
         const existingLocation = await LocationModel.findOne({ Location, CompanyID });
     
@@ -47,7 +45,6 @@ export async function AddLocations(req, res) {
 export async function getLocationById(req, res) {
     try {
         const locationId = req.params.locationId;  // Assuming you pass the location ID in the request parameters
-        console.log(locationId)
         const location = await LocationModel.findById(locationId);
         
         if (!location) {

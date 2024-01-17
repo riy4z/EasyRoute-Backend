@@ -5,9 +5,9 @@ import UserRouteModel from "./model/UserRoute.model.js";
 export async function saveRoute(req, res) {
     try {
         const { Route, CompanyID, LocationID, RouteName } = req.body;
-        console.log(Route, CompanyID, LocationID, RouteName);
 
-        // Create a new route
+
+        // Create a new routee
         const newRoute = new RoutesModel({ Route, CompanyID, LocationID, RouteName });
         const savedRoute = await newRoute.save();
 
@@ -50,7 +50,6 @@ export async function updateRoute(req, res) {
 export async function deleteRoute(req, res) {
     try {
         const routeId = req.params.id;
-        console.log(routeId);
        
         const deletedRoute = await RoutesModel.deleteOne({_id:routeId});
         const deletedUserRoute = await UserRouteModel.deleteOne({RouteID:routeId});
@@ -71,7 +70,6 @@ export async function deleteRoute(req, res) {
 export async function getRouteById(req, res) {
     try {
         const routeId = req.params.routeId;
-        console.log(routeId);
 
         const foundRoute = await RoutesModel.findById(routeId);
 

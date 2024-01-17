@@ -54,8 +54,7 @@ export async function StoreAddressData(req, res) {
     try {
       // Extract markerId from request parameters
       const markerId = req.query.markerId;
-      const markkerId = `"${markerId}"`
-      console.log(markkerId)
+
       // Use markerId in the query to find addressData
       const addressData = await AddressInfo.find({ markerId: markerId });
   

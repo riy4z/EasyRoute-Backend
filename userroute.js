@@ -34,14 +34,13 @@ export async function AddUserRoute(req, res) {
     try {
   
       const userId = req.query.userId; 
-      console.log(userId);
+
       if (!userId) {
         return res.status(400).json({ error: "UserId is required" });
       }
   
       // Fetch user routes based on userId
       const userRoutes = await UserRouteModel.find({ UserID: userId });
- console.log(userRoutes)
       // Send the user routes in the response
       res.status(200).json(userRoutes);
     } catch (error) {

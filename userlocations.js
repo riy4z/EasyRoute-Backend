@@ -34,7 +34,7 @@ export async function AddUserLocation(req, res) {
 export async function GetUserLocations(req, res) {
   try {
     const userId = req.query.userId; // Use req.query instead of req.params
-    console.log(userId);
+
     if (!userId) {
       return res.status(400).json({ error: "UserId is required" });
     }
@@ -55,7 +55,6 @@ export async function DeleteUserLocation(req, res) {
   try {
     // Extract userId and locationId from the request body or params
     const { userId, locationId } = req.body; // Assuming you are sending userId and locationId in the request body
-console.log(req.body)
     // Validate if userId and locationId are provided
     if (!userId || !locationId) {
       return res.status(400).json({ error: "UserId and LocationId are required" });

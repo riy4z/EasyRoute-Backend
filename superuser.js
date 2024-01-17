@@ -107,7 +107,6 @@ export async function createCompany(req, res) {
 export async function registerCorporateUser(req, res) {
     try {
         const {firstname, lastname, username, password, profile, email, companyId, role, mobile, address } = req.body;
-        console.log(role)
         // Check for existing username
         const existingUsername = await UserModel.findOne({ username });
         if (existingUsername) {
@@ -133,7 +132,6 @@ export async function registerCorporateUser(req, res) {
                 RoleHierarchy: role , // Set to default if not provided
                 address: address
             });
-            console.log(user);
             // Save the user to the database
             const result = await user.save();
             return res.status(201).json({ msg: 'User registered successfully', result });
