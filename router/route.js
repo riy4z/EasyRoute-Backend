@@ -53,7 +53,8 @@ router.route('/getUserLocations').get(userlocations.GetUserLocations)
 router.route('/getUserRoutes').get(userroutes.GetUserRoutes)
 router.route('/getRoutes/:routeId').get(routes.getRouteById)
 router.route('/getMeetingNotesAndHistory').get(checkIns.getMeetingNotesAndHistory);
-router.route('/getFollowUpDataByCompany').get(followups.getFollowUpsByCompany);
+router.route('/getFollowUpDataByLocation').get(followups.getFollowUpsByLocation);
+router.route('/getFollowUpDataByAddressId').get(followups.getFollowUpsByAddressId);
 
 /** PUT Methods */
 router.route('/updateuser').put(Auth,controller.updateUser);
@@ -62,12 +63,14 @@ router.route('/resetPassword').put(controller.verifyUser,controller.resetPasswor
 
 /*PATCH Methods */
 router.route('/update-address-data/:id').patch(addressinfo.UpdateAddressData)
+router.route('/update-follow-up/:id').patch(followups.UpdateFollowUp)
 router.route('/updateRoute/:id').patch(routes.updateRoute)
 // router.route('/updateUserLocation/:id').patch(userlocations.UpdateUserLocation)
 router.route('/updateUserRoleHierarchy/:id').patch(users.UpdateUserRoleHierarchy)
 
 /*DELETE Methods*/
 router.route('/deleteRoute/:id').delete(routes.deleteRoute)
+router.route('/deleteFollowUp/:addressId').delete(followups.deleteFollowUp)
 router.route('/deleteUserLocation').delete(userlocations.DeleteUserLocation)
 //
 
