@@ -4,6 +4,8 @@ import { ObjectId } from "mongodb";
 export const addressSchema = new mongoose.Schema({
     "First Name": String,
     "Last Name": String,
+    "Phone": Number,
+    "Email": String,
     "Street Address": String,
     "City": String,
     "State": String,
@@ -16,6 +18,6 @@ export const addressSchema = new mongoose.Schema({
     "markerId": {type:String},
 });
 
-addressSchema.index({ "First Name": 1, "Last Name": 1, "Street Address":1, "City": 1,"State":1, "ZIP Code": 1, "LocationID": 1}, { unique: true });
+addressSchema.index({ "First Name": 1, "Last Name": 1, "Street Address":1, "City": 1,"State":1, "ZIP Code": 1, "LocationID": 1, "Phone":1,"Email":1}, { unique: true });
 
 export default mongoose.model.AddressInfo || mongoose.model('AddressInfo', addressSchema)
