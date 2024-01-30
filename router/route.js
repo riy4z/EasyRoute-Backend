@@ -1,4 +1,5 @@
 import { Router } from "express";
+const router = Router(); 
 import * as controller from '../controllers/appController.js';
 import * as roles from "../roles.js";
 import * as csvdetails from "../csvdetails.js"
@@ -12,10 +13,7 @@ import * as users from '../users.js'
 import * as routes from "../routes.js";
 import * as userroutes from "../userroute.js";
 import * as superuser from "../superuser.js"
-import * as checkIns from "../checkIns.js"
-import * as followups from "../followups.js"
 
-const router = Router(); 
 /**POST Methods */
 router.route('/register').post(controller.register);;
 router.route('/registerMail').post(registerMail);
@@ -28,8 +26,6 @@ router.route('/addLocations').post(locations.AddLocations);
 router.route('/addUserLocation').post(userlocations.AddUserLocation)
 router.route('/saveRoute').post(routes.saveRoute)
 router.route('/addUserRoute').post(userroutes.AddUserRoute)
-router.route('/addCheckIn').post(checkIns.AddCheckIn);
-router.route('/saveFollowUp').post(followups.saveFollowUp);
 
 /** GET Methods */
 router.route('/user/:username').get(controller.getUser)
@@ -45,7 +41,6 @@ router.route('/getRoles').get(roles.getRoles)
 router.route('/getRolesByHierarchy').get(roles.getRolesByHierarchy)
 router.route('/getCompanys').get(companys.getCompanys)
 router.route('/getCompanyById').get(companys.getCompanyById)
-router.route('/getUserById/:userId').get(users.getUserById);
 router.route('/getUsersByCompany').get(users.getUsersByCompany)
 router.route('/getLocations').get(locations.getLocations)
 router.route('/getLocationsById/:locationId').get(locations.getLocationById)
@@ -55,6 +50,7 @@ router.route('/getRoutes/:routeId').get(routes.getRouteById)
 router.route('/getMeetingNotesAndHistory').get(checkIns.getMeetingNotesAndHistory);
 router.route('/getFollowUpDataByLocation').get(followups.getFollowUpsByLocation);
 router.route('/getFollowUpDataByAddressId').get(followups.getFollowUpsByAddressId);
+
 
 /** PUT Methods */
 router.route('/updateuser').put(Auth,controller.updateUser);
@@ -82,5 +78,4 @@ router.route('/create-company').post(superuser.createCompany)
 router.route('/register-corporate-user').post(superuser.registerCorporateUser)
 
 export default router;
-
 
