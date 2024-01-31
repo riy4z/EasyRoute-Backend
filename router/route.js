@@ -12,7 +12,10 @@ import {registerMail} from '../controllers/mailer.js';
 import * as users from '../users.js'
 import * as routes from "../routes.js";
 import * as userroutes from "../userroute.js";
-import * as superuser from "../superuser.js"
+import * as superuser from "../superuser.js";
+import * as checkIns from "../checkIns.js"
+import * as followups from "../followups.js"
+
 
 /**POST Methods */
 router.route('/register').post(controller.register);;
@@ -26,6 +29,8 @@ router.route('/addLocations').post(locations.AddLocations);
 router.route('/addUserLocation').post(userlocations.AddUserLocation)
 router.route('/saveRoute').post(routes.saveRoute)
 router.route('/addUserRoute').post(userroutes.AddUserRoute)
+router.route('/addCheckIn').post(checkIns.AddCheckIn);
+router.route('/saveFollowUp').post(followups.saveFollowUp);
 
 /** GET Methods */
 router.route('/user/:username').get(controller.getUser)
@@ -50,6 +55,7 @@ router.route('/getRoutes/:routeId').get(routes.getRouteById)
 router.route('/getMeetingNotesAndHistory').get(checkIns.getMeetingNotesAndHistory);
 router.route('/getFollowUpDataByLocation').get(followups.getFollowUpsByLocation);
 router.route('/getFollowUpDataByAddressId').get(followups.getFollowUpsByAddressId);
+router.route('/getUserById/:userId').get(users.getUserById);
 
 
 /** PUT Methods */
