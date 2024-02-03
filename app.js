@@ -30,7 +30,7 @@ app.use(cors(corsOptions));
 app.use(bodyParser.json(config.bodyParser.json));
 app.use(bodyParser.urlencoded(config.bodyParser.urlencoded));
 app.use(morgan('tiny'));
-app.disable('x-powered-by');
+// app.disable('x-powered-by');
 
 // Routing all routes with /api to route.js
 app.use('/api', router);

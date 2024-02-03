@@ -67,12 +67,13 @@ export async function deleteRoute(req, res) {
 
 
 // Fetch by ID
-export async function getRouteById(req, res) {
+export async function getRouteByLocation(req, res) {
     try {
-        const routeId = req.params.routeId;
+        // const routeId = req.params.routeId;
+        const locationId = req.params.locationId;
 
-        const foundRoute = await RoutesModel.findById(routeId);
-
+        const foundRoute = await RoutesModel.find({ LocationID: locationId });
+        console.log(foundRoute)
         if (!foundRoute) {
             return res.status(404).json({ error: 'Route not found' });
         }

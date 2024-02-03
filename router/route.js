@@ -1,4 +1,5 @@
 import { Router } from "express";
+const router = Router(); 
 import * as controller from '../controllers/appController.js';
 import * as roles from "../roles.js";
 import * as csvdetails from "../csvdetails.js"
@@ -11,11 +12,11 @@ import {registerMail} from '../controllers/mailer.js';
 import * as users from '../users.js'
 import * as routes from "../routes.js";
 import * as userroutes from "../userroute.js";
-import * as superuser from "../superuser.js"
+import * as superuser from "../superuser.js";
 import * as checkIns from "../checkIns.js"
 import * as followups from "../followups.js"
 
-const router = Router(); 
+
 /**POST Methods */
 router.route('/register').post(controller.register);;
 router.route('/registerMail').post(registerMail);
@@ -45,15 +46,17 @@ router.route('/getRoles').get(roles.getRoles)
 router.route('/getRolesByHierarchy').get(roles.getRolesByHierarchy)
 router.route('/getCompanys').get(companys.getCompanys)
 router.route('/getCompanyById').get(companys.getCompanyById)
-router.route('/getUserById/:userId').get(users.getUserById);
 router.route('/getUsersByCompany').get(users.getUsersByCompany)
 router.route('/getLocations').get(locations.getLocations)
 router.route('/getLocationsById/:locationId').get(locations.getLocationById)
 router.route('/getUserLocations').get(userlocations.GetUserLocations)
 router.route('/getUserRoutes').get(userroutes.GetUserRoutes)
-router.route('/getRoutes/:routeId').get(routes.getRouteById)
+router.route('/getRoutes/:locationId').get(routes.getRouteByLocation)
 router.route('/getMeetingNotesAndHistory').get(checkIns.getMeetingNotesAndHistory);
-router.route('/getFollowUpDataByCompany').get(followups.getFollowUpsByCompany);
+router.route('/getFollowUpDataByLocation').get(followups.getFollowUpsByLocation);
+router.route('/getFollowUpDataByAddressId').get(followups.getFollowUpsByAddressId);
+router.route('/getUserById/:userId').get(users.getUserById);
+
 
 /** PUT Methods */
 router.route('/updateuser').put(Auth,controller.updateUser);
@@ -62,12 +65,14 @@ router.route('/resetPassword').put(controller.verifyUser,controller.resetPasswor
 
 /*PATCH Methods */
 router.route('/update-address-data/:id').patch(addressinfo.UpdateAddressData)
+router.route('/update-follow-up/:id').patch(followups.UpdateFollowUp)
 router.route('/updateRoute/:id').patch(routes.updateRoute)
 // router.route('/updateUserLocation/:id').patch(userlocations.UpdateUserLocation)
 router.route('/updateUserRoleHierarchy/:id').patch(users.UpdateUserRoleHierarchy)
 
 /*DELETE Methods*/
 router.route('/deleteRoute/:id').delete(routes.deleteRoute)
+router.route('/deleteFollowUp/:addressId').delete(followups.deleteFollowUp)
 router.route('/deleteUserLocation').delete(userlocations.DeleteUserLocation)
 //
 
@@ -79,5 +84,4 @@ router.route('/create-company').post(superuser.createCompany)
 router.route('/register-corporate-user').post(superuser.registerCorporateUser)
 
 export default router;
-
 
