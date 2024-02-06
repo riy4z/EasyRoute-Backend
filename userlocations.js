@@ -5,7 +5,7 @@ import UserLocationModel from "./model/UserLocation.model.js";
 export async function AddUserLocation(req, res) {
   try {
     // Extract userId and locationId from the request body or params
-    const { userId, locationId } = req.body; // Assuming you are sending userId and locationId in the request body
+    const { userId, locationId, role } = req.body; // Assuming you are sending userId and locationId in the request body
 
     // Validate if userId and locationId are provided
     if (!userId || !locationId) {
@@ -16,6 +16,7 @@ export async function AddUserLocation(req, res) {
     const newUserLocation = new UserLocationModel({
       UserID: userId,
       LocationID: locationId,
+      RoleHierarchy: role,
     });
 
     // Save the document to the database
