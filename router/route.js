@@ -51,7 +51,7 @@ router.route('/getLocations').get(locations.getLocations)
 router.route('/getLocationsById/:locationId').get(locations.getLocationById)
 router.route('/getUserLocations').get(userlocations.GetUserLocations)
 router.route('/getUserRoutes').get(userroutes.GetUserRoutes)
-router.route('/getRoutes/:routeId').get(routes.getRouteById)
+router.route('/getRoutes/:locationId').get(routes.getRouteByLocation)
 router.route('/getMeetingNotesAndHistory').get(checkIns.getMeetingNotesAndHistory);
 router.route('/getFollowUpDataByLocation').get(followups.getFollowUpsByLocation);
 router.route('/getFollowUpDataByAddressId').get(followups.getFollowUpsByAddressId);
