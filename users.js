@@ -66,3 +66,21 @@ export async function getUserById(req, res) {
       res.status(500).send("Internal Server Error");
   }
 }
+
+
+export async function UpdateUser(req,res){
+  const { id } = req.params;
+  const updatedData = req.body;
+
+  try {
+    const userData = await UserModel.findByIdAndUpdate(id, updatedData, { new: true });
+
+    if (userData) {
+      res.status(200).json(userData);
+    } else {
+      res.status(404).json({ message: 'Address data not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: 'Error updating address data' });
+  }
+}

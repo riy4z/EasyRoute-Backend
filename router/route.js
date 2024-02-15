@@ -69,6 +69,7 @@ router.route('/update-follow-up/:id').patch(followups.UpdateFollowUp)
 router.route('/updateRoute/:id').patch(routes.updateRoute)
 // router.route('/updateUserLocation/:id').patch(userlocations.UpdateUserLocation)
 router.route('/updateUserRoleHierarchy/:id').patch(users.UpdateUserRoleHierarchy)
+router.route('/updateUser/:id').patch(users.UpdateUser)
 
 /*DELETE Methods*/
 router.route('/deleteRoute/:id').delete(routes.deleteRoute)
