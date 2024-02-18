@@ -1,4 +1,6 @@
 import AddressInfo from "./model/AddressInfo.model.js";
+import LocationModel from "./model/Location.model.js";
+import { createObjectCsvStringifier } from 'csv-writer';
 
 //To store data in AddressInfo
 
@@ -87,3 +89,59 @@ export async function StoreAddressData(req, res) {
       res.status(500).json({ error: 'Error retrieving address data' });
     }
   }
+
+  export async function exportAccounts(req, res) {
+    const { locationId } = req.body;
+    console.log(locationId);
+
+    try {
+        const addresses = await AddressInfo.find({ LocationID: locationId });
+
+        if (addresses.length === 0) {
+
+          return res.status(201).send({ message: 'No records found for the selected location.' });
+      }
+        const location = await LocationModel.findById(locationId);
+        console.log(addresses);
+
+        const csvStringifier = createObjectCsvStringifier({
+            header: [
+                { id: 'First Name', title: 'First Name' },
+                { id: 'Last Name', title: 'Last Name' },
+                { id: 'Phone', title: 'Phone' },
+                { id: 'Email', title: 'Email' },
+                { id: 'Street Address', title: 'Street Address' },
+                { id: 'City', title: 'City' },
+                { id: 'State', title: 'State' },
+                { id: 'ZIP Code', title: 'ZIP Code' },
+                { id: 'latitude', title: 'latitude' },
+                { id: 'longitude', title: 'longitude' },
+                { id: 'Location', title: 'Location' },
+                // Add other fields as needed
+            ]
+        });
+
+        const records = addresses.map(address => ({
+          'First Name': address['First Name'],
+          'Last Name': address['Last Name'],
+          'Phone': address['Phone'],
+          'Email': address['Email'],
+          'Street Address': address['Street Address'],
+          'City': address['City'],
+          'State': address['State'],
+          'ZIP Code': address['ZIP Code'],
+          'latitude': address['latitude'],
+          'longitude': address['longitude'],
+            'Location': location.Location, // Assuming the location name is stored in the location document
+        }));
+
+        const csvData = csvStringifier.getHeaderString() + csvStringifier.stringifyRecords(records);
+
+        res.header('Content-Type', 'text/csv');
+        res.attachment('address_data.csv');
+        res.send(csvData);
+    } catch (error) {
+        console.error('Error exporting address data:', error);
+        res.status(500).send('Internal Server Error');
+    }
+}
