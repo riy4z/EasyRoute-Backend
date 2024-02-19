@@ -6,10 +6,10 @@ export async function AddUserLocation(req, res) {
   try {
     // Extract userId and locationId from the request body or params
     const { userId, locationId, role } = req.body; // Assuming you are sending userId and locationId in the request body
-
+    console.log(userId, locationId, role)
     // Validate if userId and locationId are provided
-    if (!userId || !locationId) {
-      return res.status(400).json({ error: "UserId and LocationId are required" });
+    if (!userId || !locationId || role==undefined) {
+      return res.status(400).json({ error: "UserId, LocationId & Role are required" });
     }
 
     // Create a new UserLocation document
