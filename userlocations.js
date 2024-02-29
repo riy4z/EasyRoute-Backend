@@ -81,6 +81,34 @@ export async function DeleteUserLocation(req, res) {
   }
 }
 
+// UpdateUserLocationRoleHierarchy
+export async function UpdateUserLocationRole(req, res) {
+  try {
+    // Extract userId, locationId, and newRoleHierarchy from the request body or params
+    const { userId, locationId, newRoleHierarchy } = req.body; // Assuming you are sending userId, locationId, and newRoleHierarchy in the request body
+    // Validate if userId, locationId, and newRoleHierarchy are provided
+    if (!userId || !locationId || newRoleHierarchy === undefined) {
+      return res.status(400).json({ error: "UserId, LocationId, and New RoleHierarchy are required" });
+    }
 
-
-
+    // Find and update the UserLocation document based on userId and locationId
+    const updatedUserLocation = await UserLocationModel.findOneAndUpdate(
+      {
+        UserID: userId,
+        LocationID: locationId,
+      },
+      { RoleHierarchy: newRoleHierarchy },
+      { new: true } // To return the updated document
+    );
+    // Check if the user location was found and updated
+    if (!updatedUserLocation) {
+      return res.status(404).json({ error: "User location not found" });
+    }
+    // Send a success response
+    res.status(200).json({ message: "User location RoleHierarchy updated successfully" });
+  } catch (error) {
+    // Handle errors
+    console.error("Error updating user location RoleHierarchy:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+}

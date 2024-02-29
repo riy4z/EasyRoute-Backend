@@ -69,7 +69,7 @@ router.route('/resetPassword').put(controller.verifyUser,controller.resetPasswor
 router.route('/update-address-data/:id').patch(addressinfo.UpdateAddressData)
 router.route('/update-follow-up/:id').patch(followups.UpdateFollowUp)
 router.route('/updateRoute/:id').patch(routes.updateRoute)
-// router.route('/updateUserLocation/:id').patch(userlocations.UpdateUserLocation)
+router.route('/updateUserLocationRole/').patch(userlocations.UpdateUserLocationRole)
 router.route('/updateUserRoleHierarchy/:id').patch(users.UpdateUserRoleHierarchy)
 router.route('/updateUser/:id').patch(users.UpdateUser)
 
