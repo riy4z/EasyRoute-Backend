@@ -14,7 +14,7 @@ const accessRequestSchema = new mongoose.Schema({
   adminEmail: String,
   username: String,
   password: String,
-  mobile: Number,
+  mobile: String,
   address: String,
   city: String,
   country: String,
