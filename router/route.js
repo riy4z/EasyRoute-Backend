@@ -46,6 +46,7 @@ router.route('/get-address-data-locationid/:LocationID').get(addressinfo.GetAddr
 router.route('/get-address-data-marker').get(addressinfo.GetAddressDataByMarkerId)
 router.route('/getRoles').get(roles.getRoles)
 router.route('/getRolesByHierarchy').get(roles.getRolesByHierarchy)
+router.route('/getRolesByHierarchyandCompany').get(roles.getRolesByHierarchyandCompany)
 router.route('/getCompanys').get(companys.getCompanys)
 router.route('/getCompanyById').get(companys.getCompanyById)
 router.route('/getUsersByCompany').get(users.getUsersByCompany)

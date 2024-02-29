@@ -29,6 +29,20 @@ export async function getRolesByHierarchy(req, res) {
       res.status(500).send("Internal Server Error");
   }
 }
+export async function getRolesByHierarchyandCompany(req, res) {
+  try {
+      const roleHierarchy = req.query.rolehierarchy;
+      const companyID = req.query.companyID
+
+      // Modify the query based on your database schema and logic
+      const roles = await RoleModel.find({ RoleHierarchy: roleHierarchy, CompanyID : companyID });
+
+      res.send(roles);
+  } catch (error) {
+      console.error("Error fetching roles by hierarchy:", error);
+      res.status(500).send("Internal Server Error");
+  }
+}
 
 export async function AddRoles(req, res) {
     try {

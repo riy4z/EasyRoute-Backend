@@ -25,7 +25,7 @@ export async function verifyUser(req, res, next){
 
 export async function register(req, res) {
     try {
-        const { username, password, profile, email, companyId, role } = req.body;
+        const { username, password, profile, email, companyId, role, firstName, lastName } = req.body;
 
         // Check for existing username
         const existingUsername = await UserModel.findOne({ username });
@@ -47,7 +47,9 @@ export async function register(req, res) {
                 profile: profile || '',
                 email,
                 CompanyID: companyId || null, // Set to null if not provided
-                RoleHierarchy: role || null, // Set to default if not provided
+                RoleHierarchy: role || null,
+                firstName,
+                lastName // Set to default if not provided
             });
 
             // Save the user to the database
