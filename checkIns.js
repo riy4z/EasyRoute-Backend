@@ -29,6 +29,25 @@ export async function AddCheckIn(req, res) {
     res.status(500).json({ error: "Internal Server Error" });
   }
 }
+export async function getCheckinCount(req, res) {
+  try {
+    const { locationId, startDate, endDate } = req.body;
+    const location = await LocationModel.findById(locationId);
+    const companyID = await CompanyModel.findById(location.CompanyID);
+    
+    // Query the database to get the count of check-ins for the specified location and date range
+    const count = await CheckInModel.countDocuments({
+        locationID: locationId,
+        createdAt: { $gte: startDate, $lte: endDate }
+    });
+
+    // Send the count and locationID back to the client
+    res.json({ locationID: location.Location, Company:companyID.CompanyName,count });
+  } catch (error) {
+    console.error('Error getting check-in count:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+}
 
 export async function getMeetingNotesAndHistory(req, res) {
   try {
@@ -92,14 +111,14 @@ async function generateCSV(checkIns, locationId) {
       const userLastName = user.get('lastName');
 
       const row = [
+        companyID.CompanyName,
+        locationID.Location,
         `${addressFirstName} ${addressLastName}`,
         `${userFirstName} ${userLastName}`,
         `${addressStreet}`,
         `${addressCity}`,
         `${addressState}`,
         `${addressZipCode}`,
-        companyID.CompanyName,
-        locationID.Location,
         `"${checkIn.meetingNotes.replace(/"/g, '""')}"`,
         checkIn.createdAt.toISOString()
       ];

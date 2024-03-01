@@ -32,6 +32,7 @@ router.route('/addUserRoute').post(userroutes.AddUserRoute)
 router.route('/addCheckIn').post(checkIns.AddCheckIn);
 router.route('/saveFollowUp').post(followups.saveFollowUp);
 router.route('/exportCheckin').post(checkIns.exportCheckin)
+router.route('/getCheckinCount').post(checkIns.getCheckinCount)
 router.route('/exportAccounts').post(addressinfo.exportAccounts)
 
 /** GET Methods */
