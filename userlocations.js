@@ -1,6 +1,20 @@
 // Import the UserLocation model
 import UserLocationModel from "./model/UserLocation.model.js";
 
+export async function getUsersByLocation(req, res) {
+  try {
+      const locationId = req.query.locationId;
+
+      
+      const users = await UserLocationModel.find({ LocationID: locationId });
+
+      res.send(users);
+  } catch (error) {
+      console.error("Error fetching users by LocationID:", error);
+      res.status(500).send("Internal Server Error");
+  }
+}
+
 // AddUserLocation 
 export async function AddUserLocation(req, res) {
   try {
